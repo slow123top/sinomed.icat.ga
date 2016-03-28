@@ -1,0 +1,37 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="sinomed:war exploded">
+    <output-path>$PROJECT_DIR$/classes/artifacts/sinomed_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="sinomed" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.13" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.3" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.3" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-servlet:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-security:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-server:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-http:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-util:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-io:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:apache-jstl:9.3.6.v20151106" />
+          <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-spec:1.2.5" />
+          <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.38" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.13" />
+          <element id="library" level="module" name="Maven: com.alibaba:jconsole:1.8.0" module-name="sinomed" />
+          <element id="library" level="module" name="Maven: com.alibaba:tools:1.8.0" module-name="sinomed" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.4" />
+          <element id="library" level="project" name="Maven: org.jodd:jodd-core:3.6.3" />
+          <element id="library" level="project" name="Maven: org.jodd:jodd-bean:3.6.3" />
+          <element id="library" level="project" name="Maven: org.jodd:jodd-props:3.6.3" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:19.0" />
+          <element id="library" level="project" name="Maven: com.github.cage:cage:1.0" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="sinomed/web/Web" />
+    </root>
+  </artifact>
+</component>
