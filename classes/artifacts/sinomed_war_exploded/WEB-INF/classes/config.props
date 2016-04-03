@@ -1,0 +1,4 @@
+db.driver=com.mysql.jdbc.Driver
+db.url=jdbc:mysql://192.168.11.9:3306/five&six
+db.username=root
+db.password=123456

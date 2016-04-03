@@ -72,7 +72,7 @@ public class ZhuQi {
             d = "0" + d;
         }
         int zq4 = Integer.parseInt(m + d);
-        if (zq4 <= 121)
+        if (zq4 < 121)
             zq4 += 1200;
 
         final int zaVal = zq4;

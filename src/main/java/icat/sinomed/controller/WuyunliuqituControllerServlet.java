@@ -1,19 +1,21 @@
 package icat.sinomed.controller;
 
-import java.io.IOException;
-import java.time.LocalDate;
+import toLunar.GreToLun;
+import wuyunliuqi.HuoS;
+import wuyunliuqi.SiTian;
+import wuyunliuqi.ZhongYun;
+import wuyunliuqi.ZhuQi;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import toLunar.GreToLun;
-import wuyunliuqi.HuoS;
-import wuyunliuqi.SiTian;
-import wuyunliuqi.ZhongYun;
-import wuyunliuqi.ZhuQi;
+import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.eclipse.jetty.util.StringUtil.isBlank;
 
@@ -29,28 +31,59 @@ public class WuyunliuqituControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("contextPath", request.getContextPath());
         // String dateString = "2015-12-23";
+        List list = new ArrayList();
+        list.add("公历");
+        list.add("阴历");
+        String dateone       = request.getParameter("dateone");
         String year       = request.getParameter("YYYY");
         String month      = request.getParameter("MM");
         String day        = request.getParameter("DD");
-
-
+        String hour        = request.getParameter("HH");
+//        String rlj        = request.getParameter("dateone");
+        String rl = null;
+        String rlj = null;
+        String nyrcal = null;
+        String fromtoyear = null;
         // String cal = null, cal1 = null;
-        if (isBlank(year) || isBlank(month) || isBlank(day)) {
-            final LocalDate now = LocalDate.now();
+        if (isBlank(year) || isBlank(month) || isBlank(day) || isBlank(hour) || isBlank(dateone)) {
+//            final LocalDate now = LocalDate.now();
+            final LocalDateTime now = LocalDateTime.now();
             day = Integer.toString(now.getDayOfMonth());
             month = Integer.toString(now.getMonthValue());
             year = Integer.toString(now.getYear());
-        }
+            hour = Integer.toString(now.getHour());
+            nyrcal = String.format("%s年%s月%s日", year, month, day);
+            try {
+                fromtoyear = GreToLun.toTDYear(nyrcal);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            rlj = "公历";//
+            rl = "阴历  ：";
+        }else if(dateone.equals("公历")){
+            nyrcal = String.format("%s年%s月%s日", year, month, day);
 
+            try {
+                fromtoyear = GreToLun.toTDYear(nyrcal);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            rl = "阴历  ：";
+        }else if(dateone.equals("阴历")){
+
+            nyrcal = String.format("%s年%s月%s日", year, month, day);
+                fromtoyear = GreToLun.toGlYear(nyrcal);
+
+            nyrcal = fromtoyear;
+            rl = "公历  ：";
+        }
+        request.setAttribute("rl",rl);
+        request.setAttribute("list",list);
+        request.setAttribute("currentRl", dateone);
         request.setAttribute("currentYear", year);
         request.setAttribute("currentMonth", month);
         request.setAttribute("currentDay", day);
-
-        String   cal    = String.format("%sY%sM%sD", year, month, day);
-        request.setAttribute("cal", cal);
-
-        String nyrcal = String.format("%s年%s月%s日", year, month, day);
-
+        request.setAttribute("currentHour", hour);
 
             /*
             输出三角号
@@ -58,10 +91,7 @@ public class WuyunliuqituControllerServlet extends HttpServlet {
 
         try {
             String x = HuoS.Sh(nyrcal);
-            //request.setAttribute("x", x);
-            String TDyear = GreToLun.toTDYear(nyrcal);
-            TDyear = "农历日期为：" + TDyear;
-            request.setAttribute("TDyear", TDyear);
+            request.setAttribute("TDyear", fromtoyear);
             String si        = SiTian.st(nyrcal).getSt();
             String ke        = SiTian.kq(nyrcal).getSt();
             String zhong     = ZhongYun.zy(nyrcal).getZy();
@@ -96,6 +126,6 @@ public class WuyunliuqituControllerServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
 
-        request.getRequestDispatcher("/wuyunliuqitu.jsp").forward(request, response);
+//        request.getRequestDispatcher("/wuyunliuqituAjax.jsp").forward(request, response);
     }
 }

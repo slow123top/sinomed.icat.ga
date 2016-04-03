@@ -4,6 +4,7 @@ package toLunar;
  * Created by Hu_2015 on 2016/3/21.
  */
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,15 +15,15 @@ import java.util.Date;
  */
 public class GreToLun {
     //天干
-    private static final String[] TG = {"甲","乙","丙","丁","戊","己","庚","辛","壬","癸"};
+    private static final String[] TG = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
     //    地支
-    private static final String[] DZ = {"子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
+    private static final String[] DZ = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
     private int year;
     private int month;
     private int day;
     private boolean leap;
     final static String chineseNumber[] = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"};//农历月份
-    static SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy年MM月dd日");//公历日期格式
+    SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy年MM月dd日");//公历日期格式
     //    定义从1900年1月31日-2050年每年农历的月份信息
 //    1-4位标识有无闰月  有的话  为闰月的月份  没有的话  为0；5-16位代表除了闰月外  正常月份是大月还是小月 1为大月30天  0为小月29天；
 //    17-20位代表闰月是大月还是小月
@@ -42,16 +43,36 @@ public class GreToLun {
                     0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530,
                     0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45,
                     0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0};
+    /*
+    SimpleDateFormat不是线程安全的，因此采用每个线程创建一个SimpleDateFormat的方法，
+    降低开销又节省时间
+     */
+    private static ThreadLocal<DateFormat> threadLocal = new ThreadLocal<DateFormat>() {
+        @Override
+        public DateFormat initialValue() {
+            return new SimpleDateFormat("yyyy年MM月dd日");
+        }
+    };
+
+    public static Date parse(String dateStr) throws ParseException {
+        return threadLocal.get().parse(dateStr);
+    }
+
+    public static String format(Date date) {
+        return threadLocal.get().format(date);
+    }
+
     //   传回农历 y年的总天数
-    final private static int yearDays(int y) {
+     public static int yearDays(int y) {
         int i, sum = 348;
         for (i = 0x8000; i > 0x8; i >>= 1) {
             if ((lunarInfo[y - 1900] & i) != 0) sum += 1;
         }
         return (sum + leapDays(y));
     }
+
     //    ====== 传回农历 y年闰月的天数
-    final private static int leapDays(int y) {
+     public static int leapDays(int y) {
         if (leapMonth(y) != 0) {
             if ((lunarInfo[y - 1900] & 0x10000) != 0)
                 return 30;
@@ -60,17 +81,20 @@ public class GreToLun {
         } else
             return 0;
     }
+
     //    传回农历 y年闰哪个月 1-12 , 没闰传回 0
-    final private static int leapMonth(int y) {
+     public static int leapMonth(int y) {
         return (int) (lunarInfo[y - 1900] & 0xf);
     }
+
     //====== 传回农历 y年m月的总天数
-    final private static int monthDays(int y, int m) {
+     public static int monthDays(int y, int m) {
         if ((lunarInfo[y - 1900] & (0x10000 >> m)) == 0)
             return 29;
         else
             return 30;
     }
+
     /**
      * 传出y年m月d日对应的农历.
      * yearCyl3:农历年与1864的相差数
@@ -88,14 +112,21 @@ public class GreToLun {
 
         //SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy年MM月dd日");//公历日期格式
         //cal1 = "2014年2月14日";
-        Date date1 = chineseDateFormat.parse(cal1);
+//        Date date1 = chineseDateFormat.parse(cal1);
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(date1);
+        Date date1 = GreToLun.parse(cal1);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
+//        String date = GreToLun.format(datestr);
+//        DateFormat date1 = threadLocal.
         int yearCyl, monCyl, dayCyl;
         int leapMonth = 0;
         Date baseDate = null;
         try {
-            baseDate = chineseDateFormat.parse("1900年1月31日");
+            baseDate = GreToLun.parse("1900年1月31日");
+
+// baseDate = chineseDateFormat.parse("1900年1月31日");
         } catch (ParseException e) {
             //System.out.print("");
             e.printStackTrace();
@@ -158,25 +189,27 @@ public class GreToLun {
         month = iMonth;
         day = offset + 1;
     }
-/*
-    public static String getChinaDayString(int day) {
-        String chineseTen[] = {"初", "十", "廿", "卅"};
-        int n = day % 10 == 0 ? 9 : day % 10 - 1;//按照农历的格式输出  10日之内的为“初”   20时日之后的为“廿”  30称为“卅”
-        if (day > 30)
-            return "";
-        if (day == 10)
-            return "初十";
-        else
-            return chineseTen[day / 10] + chineseNumber[n];
-    }
-    */
+
+    /*
+        public static String getChinaDayString(int day) {
+            String chineseTen[] = {"初", "十", "廿", "卅"};
+            int n = day % 10 == 0 ? 9 : day % 10 - 1;//按照农历的格式输出  10日之内的为“初”   20时日之后的为“廿”  30称为“卅”
+            if (day > 30)
+                return "";
+            if (day == 10)
+                return "初十";
+            else
+                return chineseTen[day / 10] + chineseNumber[n];
+        }
+        */
     //    返回农历的年月日
     public String toString() {
         //return year + "年" + (leap ? "闰" : "") + chineseNumber[month - 1] + "月" + getChinaDayString(day);
         return year + "年" + month + "月" + day + "日";
     }
+
     //把返回的农历年换算为干支年
-    public static String  greTolun(String year) {
+    public static String greTolun(String year) {
 /*
     取（公历数－3）位数作干序数(位数0看作10)
 　　 取（公历数－3）÷12 余数作支序数(余数0看作12)
@@ -200,7 +233,7 @@ public class GreToLun {
         //System.out.print(bT);
         //System.out.print(cD);
         //System.out.print("年");
-       // char[] bc = {bT,cD};
+        // char[] bc = {bT,cD};
         //return bT;
         //return cD;
     }
@@ -224,6 +257,7 @@ public class GreToLun {
 
         return GreToLun.greTolun(b[0]);
     }
+
     /*
     public static String TDyear(String s) throws ParseException{
 
@@ -250,5 +284,93 @@ public class GreToLun {
         //System.out.print(NoLi);
 
         return NoLi;
+       // return b[0];
     }
+/*
+
+ */
+    public static int leapMonSumDays(String year, String month, String day){
+        int sum = 0;
+        int y = Integer.parseInt(year);
+        int m = Integer.parseInt(month);
+        int d = Integer.parseInt(day);
+        for (int iyear = y - 1; iyear >= 1900; iyear--) {
+            sum += GreToLun.yearDays(iyear);
+        }
+            sum += leapDays(y);
+        for (int i = 1; i <= (m - 1); i++) {
+            sum += monthDays(y,i);
+        }
+        return sum + Integer.parseInt(day);
+    }
+
+    /*
+    返回农历某一天所在的年到1900年的所有天数
+     */
+    public static int sumDays0fYear(String year, String month, String day) {
+        int sum = 0;
+        int y = Integer.parseInt(year);
+        int m = Integer.parseInt(month);
+        int d = Integer.parseInt(day);
+        for (int iyear = y - 1; iyear >= 1900; iyear--) {
+            sum += GreToLun.yearDays(iyear);
+        }
+//        是否有闰月
+        for (int i = 1; i <= (m - 1); i++) {
+            sum += monthDays(y,i);
+        }
+        return sum + Integer.parseInt(day);
+    }
+
+
+    public static String  toGlYear(String cal) {
+        String[] nyr = cal.split("年");
+        String year = nyr[0];
+        String[] nyr1 = nyr[1].split("月");
+        String month = nyr1[0];
+        String[] nyr2 = nyr1[1].split("日");
+        String day = nyr2[0];
+        int ycount = 1;//代表1900年剩下的335天已经加完
+        int mcount = 0;
+        int dcount = 0;
+        int reduce = 0;
+        if(Integer.parseInt(month) > leapMonth(Integer.parseInt(year)) || month.length() > 1)
+            reduce = leapMonSumDays(year,month,day) - 335;
+        else
+            reduce = sumDays0fYear(year,month,day) - 335;
+        for (int i = 1901; reduce >= 365; i++) {
+            if (i % 400 == 0 || (i % 4 == 0 && i % 100 != 0))
+                reduce -= 366;
+            else
+                reduce -= 365;
+            ycount++;
+        }
+        //return 1900 + count;
+        int j;
+        int[] mon = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        ycount = ycount + 1900;
+        for (j = 1; reduce > 0; j++) {
+            if ((j == 2) && (ycount % 400 == 0 || (ycount % 4 == 0 && ycount % 100 != 0))) {
+                mon[j - 1] = 29;
+                reduce -= mon[j - 1];
+            } else if((j == 2) && !(ycount % 400 == 0 || (ycount % 4 == 0 && ycount % 100 != 0))) {
+                reduce -= mon[j - 1];
+            } else {
+                reduce -= mon[j - 1];
+            }
+            mcount++;
+//            while (reduce < 0)
+//                reduce += mon[j-1];
+        }
+        if(reduce <= 0)
+            reduce += mon[j-2];
+        dcount = reduce;
+        String y = String.valueOf(ycount);
+        String m = String.valueOf(mcount);
+        String d = String.valueOf(dcount);
+        String Goli = y.concat("年").concat(m).concat("月").concat(d).concat("日");
+        return Goli;
+    }
+
+
 }

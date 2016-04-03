@@ -14,7 +14,11 @@ public class APIResponse {
     private Map<String, Object> data;
 
     public enum Status {
-        SUCCESS, ERROR
+        SUCCESS, ERROR, UNDEFINED
+    }
+
+    public APIResponse() {
+        this("", Status.UNDEFINED);
     }
 
     public APIResponse(String message, Status status) {
