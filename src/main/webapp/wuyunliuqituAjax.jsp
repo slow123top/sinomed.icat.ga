@@ -151,39 +151,39 @@
             <c:if test="${not empty user}">
                 <div id="main-right-up">
                     <div id="date-container">
-                        <form name="form" action="wuyunliuqitu" method="get" class="date">
+                        <form name="form" action="" method="get" class="date">
                             <label>出生日期：</label>
-                            <div id="gre-date" class="gredate">
-                            <select id="calendar-type" class="calendar-type" name="calendarType">
-                                <option>公历</option>
-                                <option>阴历</option>
-                            </select>
-                            <select id="year" class="year" name="YYYY">
-                                <c:forEach begin="1901" end="2049" step="1" var="y">
-                                    <option value="${y}">${y}年</option>
-                                </c:forEach>
-                            </select>
-                            <select id="month" class="month" name="MM">
-                                <c:forEach begin="1" end="12" step="1" var="m">
-                                    <option value="${m}">${m}月</option>
-                                </c:forEach>
-                            </select>
-                            <select id="day" class="day" name="DD">
-                                <c:forEach begin="1" end="31" step="1" var="d">
-                                    <option class="m-day" value="${d}">${d}日</option>
-                                </c:forEach>
-                            </select>
-                            <select id="hour" class="hour" name="HH">
-                                <c:forEach begin="00" end="23" step="1" var="h">
-                                    <option value="${h}">${h}时</option>
-                                </c:forEach>
-                            </select>
-                            <select id="minute" class="minute" name="mm">
-                                <c:forEach begin="00" end="59" step="1" var="mm">
-                                    <option value="${mm}">${mm}分</option>
-                                </c:forEach>
-                            </select>
-                            </div>
+                            <%--<div id="gre-date" class="greandlunardate">--%>
+                                <select id="calendar-type" class="calendar-type" name="calendarType">
+                                    <option>公历</option>
+                                    <option>阴历</option>
+                                </select>
+                                <select id="year" class="year" name="YYYY">
+                                    <%--<c:forEach begin="1901" end="2049" step="1" var="y">--%>
+                                        <option class="m-year">年</option>
+                                    <%--</c:forEach>--%>
+                                </select>
+                                <select id="month" class="month" name="MM">
+                                    <%--<c:forEach begin="1" end="12" step="1" var="m">--%>
+                                        <option class="m-month">月</option>
+                                    <%--</c:forEach>--%>
+                                </select>
+                                <select id="day" class="day" name="DD">
+                                    <%--<c:forEach begin="1" end="31" step="1" var="d">--%>
+                                        <option class="m-day">日</option>
+                                    <%--</c:forEach>--%>
+                                </select>
+                                <select id="hour" class="hour" name="HH">
+                                    <%--<c:forEach begin="00" end="23" step="1" var="h">--%>
+                                        <option class="m-hour">时</option>
+                                    <%--</c:forEach>--%>
+                                </select>
+                                <select id="minute" class="minute" name="mm">
+                                    <c:forEach begin="00" end="59" step="1" var="mm">
+                                        <option value="${mm}" class="m-minute">${mm}分</option>
+                                    </c:forEach>
+                                </select>
+                            <%--</div>--%>
                             <input type="submit" value="查询" class="red-btn" id="query-mtbtn"/>
 
                         </form>
@@ -288,27 +288,27 @@
                                 <option>阴历</option>
                             </select>
                             </select>
-                            <select id="b-year" class="year" name="YYYY">
-                                <c:forEach begin="1901" end="2049" step="1" var="y2">
-                                    <option value="${y2}" ${y2 == currentYear2 ? "selected":""} >${y2}年</option>
-                                </c:forEach>
+                            <select id="year2" class="year" name="YYYY">
+                                <%--<c:forEach begin="1901" end="2049" step="1" var="y2">--%>
+                                    <option class="b-year">年</option>
+                                <%--</c:forEach>--%>
                             </select>
-                            <select id="b-month" class="month" name="MM">
-                                <c:forEach begin="1" end="12" step="1" var="m2">
-                                    <option value="${m2}" ${m2 == currentMonth2 ? "selected":""} >${m2}月</option>
-                                </c:forEach>
+                            <select id="month2" class="month" name="MM">
+                                <%--<c:forEach begin="1" end="12" step="1" var="m2">--%>
+                                    <option class="b-month">月</option>
+                                <%--</c:forEach>--%>
                             </select>
-                            <select id="b-day" class="day" name="DD">
-                                <c:forEach begin="1" end="31" step="1" var="d2">
-                                    <option value="${d2}" ${d2 == currentDay2 ? "selected":""} >${d2}日</option>
-                                </c:forEach>
+                            <select id="day2" class="day" name="DD">
+                                <%--<c:forEach begin="1" end="31" step="1" var="d2">--%>
+                                    <option class="b-day">日</option>
+                                <%--</c:forEach>--%>
                             </select>
-                            <select id="b-hour" class="hour" name="HH">
-                                <c:forEach begin="00" end="24" step="1" var="h2">
-                                    <option value="${h2}" ${h2 == currentHour2 ? "selected":""} >${h2}时</option>
-                                </c:forEach>
+                            <select id="hour2" class="hour" name="HH">
+                                <%--<c:forEach begin="00" end="24" step="1" var="h2">--%>
+                                    <option class="b-hour">时</option>
+                                <%--</c:forEach>--%>
                             </select>
-                            <select id="b-minute" class="minute" name="mm">
+                            <select id="minute2" class="minute" name="mm">
                                 <c:forEach begin="00" end="59" step="1" var="mm">
                                     <option value="${mm}">${mm}分</option>
                                 </c:forEach>
@@ -426,11 +426,11 @@
 <%--<script src="js/ylyear.js"></script>--%>
 </body>
 <script language="javascript">
-    function getData(){
+    function getData() {
         $(".calendar-type").val("公历");
         var currentDate = new Date();
         $(".year").val(currentDate.getFullYear());
-        $(".month").val(currentDate.getMonth()+1);
+        $(".month").val(currentDate.getMonth() + 1);
         $(".day").val(currentDate.getDate());
         $(".hour").val(currentDate.getHours());
         $(".minute").val(currentDate.getMinutes());

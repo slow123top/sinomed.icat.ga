@@ -472,12 +472,56 @@ dizhi[8] = "申";
 dizhi[9] = "酉";
 dizhi[10] = "戌";
 dizhi[11] = "亥";
+var addgreyear = function () {
+    for (var i = 1900; i <= 2100; i++) {
+        $("#year").append("<option value='" + i + "'>" + i + "年</option>");
+    }
+}
+var addgremonth = function () {
+    for (var i = 1; i <= 12; i++) {
+        $("#month").append("<option value='" + i + "'>" + i + "月</option>");
+    }
+}
+var addgreday = function () {
+    for (var i = 1; i <= 31; i++) {
+        $("#day").append("<option value='" + i + "'>" + i + "日</option>");
+    }
+}
+var addgrehour = function () {
+    for (var i = 0; i <= 23; i++) {
+        $("#hour").append("<option value='" + i + "'>" + i + "时</option>");
+    }
+}
+var addgreminute = function () {
+    for (var i = 0; i <= 59; i++) {
+        $("#minute").append("<option value='" + i + "'>" + i + "分</option>");
+    }
+}
 var addlunaryear = function () {
     var i = 1900, j = 6, k = 0;
     for (i, j, k; i <= 2100; i++, j++, k++) {
         j = j % 10;
         k = k % 12;
-        $("#lunaryear").append("<option value='" + i + "'>" + tiangan[j] + "" + dizhi[k] + "(" + i + ")</option>");
+        $("#year").append("<option value='" + i + "'>" + tiangan[j] + "" + dizhi[k] + "(" + i + ")年</option>");
+    }
+}
+var addlunarmonth = function () {
+    var i = 0;
+    for (i; i < 12; i++) {
+        i = i % 12;
+        $("#month").append("<option value='+i+'>" + lunarmonth[i] + "</option>");
+    }
+}
+var addlunarday = function () {
+    var i = 0;
+    for (i; i < 30; i++) {
+        i = i % 30;
+        $("#day").append("<option value='" + i + "'>" + lunarday[i] + "</option>");
+    }
+}
+var addlunarhour = function () {
+    for (var i = 0; i < lunarhour.length; i++) {
+        $("#hour").append("<option value=\"\">" + lunarhour[i] + "</option>");
     }
 }
 /*
@@ -533,39 +577,19 @@ lunarday[29] = "卅";
 /*
  农历时辰
  */
-var yl = new Array();
-yl[0] = "子时";
-yl[1] = "丑时";
-yl[2] = "寅时";
-yl[3] = "卯时";
-yl[4] = "辰时";
-yl[5] = "巳时";
-yl[6] = "午时";
-yl[7] = "未时";
-yl[8] = "申时";
-yl[9] = "酉时";
-yl[10] = "戌时";
-yl[11] = "亥时";
-var addlunarmonth = function () {
-    var i = 0;
-    for (i; i < 12; i++) {
-        j = j % 12;
-        $("#year").append("<option value='" + i + "'>" + tiangan[j] + "" + dizhi[k] + "(" + i + ")</option>");
-    }
-}
-var addlunarday = function () {
-    var i = 0;
-    for (i; i < 12; i++) {
-        j = j % 12;
-        $("#year").append("<option value='" + i + "'>" + tiangan[j] + "" + dizhi[k] + "(" + i + ")</option>");
-    }
-}
-var addlunardate = function () {
-var lunardatediv = $("<div id='lun-date'></div>");
-    $("#lun-date").append("<select id='lunaryear'></select>");
-    addlunaryear();
-    lunardatediv.appendto('form');
-}
+var lunarhour = new Array();
+lunarhour[0] = "子时";
+lunarhour[1] = "丑时";
+lunarhour[2] = "寅时";
+lunarhour[3] = "卯时";
+lunarhour[4] = "辰时";
+lunarhour[5] = "巳时";
+lunarhour[6] = "午时";
+lunarhour[7] = "未时";
+lunarhour[8] = "申时";
+lunarhour[9] = "酉时";
+lunarhour[10] = "戌时";
+lunarhour[11] = "亥时";
 /*
  测试程序
  */
@@ -573,7 +597,53 @@ var lunardatediv = $("<div id='lun-date'></div>");
 /*
  js执行函数
  */
-
+var addgreyear2 = function () {
+    for (var i = 1900; i <= 2100; i++) {
+        $("#year2").append("<option value='" + i + "'>" + i + "年</option>");
+    }
+}
+var addgremonth2 = function () {
+    for (var i = 1; i <= 12; i++) {
+        $("#month2").append("<option value='" + i + "'>" + i + "月</option>");
+    }
+}
+var addgreday2 = function () {
+    for (var i = 1; i <= 31; i++) {
+        $("#day2").append("<option value='" + i + "'>" + i + "日</option>");
+    }
+}
+var addgrehour2 = function () {
+    for (var i = 0; i <= 23; i++) {
+        $("#hour2").append("<option value='" + i + "'>" + i + "时</option>");
+    }
+}
+var addlunaryear2 = function () {
+    var i = 1900, j = 6, k = 0;
+    for (i, j, k; i <= 2100; i++, j++, k++) {
+        j = j % 10;
+        k = k % 12;
+        $("#year2").append("<option value='" + i + "'>" + tiangan[j] + "" + dizhi[k] + "(" + i + ")年</option>");
+    }
+}
+var addlunarmonth2 = function () {
+    var i = 0;
+    for (i; i < 12; i++) {
+        i = i % 12;
+        $("#month2").append("<option value='+i+'>" + lunarmonth[i] + "</option>");
+    }
+}
+var addlunarday2 = function () {
+    var i = 0;
+    for (i; i < 30; i++) {
+        i = i % 30;
+        $("#day2").append("<option value='" + i + "'>" + lunarday[i] + "</option>");
+    }
+}
+var addlunarhour2 = function () {
+    for (var i = 0; i < lunarhour.length; i++) {
+        $("#hour2").append("<option value=\"\">" + lunarhour[i] + "</option>");
+    }
+}
 $(function () {
     /*
      验证码
@@ -758,6 +828,7 @@ $(function () {
      选择不同的历法  出现不同的年月日时
      */
     $("#calendar-type").change(function () {
+        //console.log("123");
         var calendartype = $("#calendar-type").val();
         var year = $("#year");
         var month = $("#month");
@@ -765,72 +836,42 @@ $(function () {
         var hour = $("#hour");
         var minute = $("#minute");
         if (calendartype == "阴历") {
-            var $options = hour.find("option");
-            $options.each(function () {
-                var $option = $(this);
-                $option.hide();
-            });
-            /*
-             更换农历年
-             */
-            for (var i = 0; i < yl.length; i++) {
-                hour.append("<option value=\"\">" + yl[i] + "</option>");
-            }
-            /*
-             更换农历月份
-             */
-            //
-            addlunardate();
+            $("#year, #month, #day, #hour").empty();
+            addlunaryear();
+            addlunarmonth();
+            addlunarday();
+            addlunarhour();
             $("#year").on("change", Rlmonthdays);
             $("#month").on("change", Rlmonthdays);
-        } else {
-            var $options = hour.find("option");
-            $options.each(function () {
-                var $option = $(this);
-                $option.show();
-            });
-            for (var i = 0; i < yl.length; i++) {
-                if (hour.find("option:visible") == yl[i]) {
-                    var $options = hour.find("option");
-                    $options.each(function () {
-                        var $option = $(this);
-                        $option.hide();
-                    });
-                }
-
-            }
+        } else{
+            $("#year, #month, #day, #hour").empty();
+            addgreyear();
+            addgremonth();
+            addgreday();
+            addgrehour();
             $("#year").on("change", updateDaySelect);
             $("#month").on("change", updateDaySelect);
-//hour.val(${h});
         }
-    })
-    ;
+    });
     $("#calendar-type2").change(function () {
         var calendartype = $("#calendar-type2").val();
         var hour = $("#b-hour");
         var minute = $("#b-minute");
         if (calendartype == "阴历") {
-            $("#gre-date").hide();
-            //$("#date-container").css('display','none');
-            var $options = hour.find("option");
-            $options.each(function () {
-                var $option = $(this);
-                $option.hide();
-            });
-            //for (var i = 0; i < yl.length; i++) {
-            //    hour.append("<option>庚子(1900)</option><option>辛丑(1901)</option><option>壬寅(1902)</option><option>癸卯(1903)</option><option>甲辰(1904)</option><option>乙巳(1905)</option><option>丙午(1906)</option><option>丁未(1907)</option><option>戊申(1908)</option><option>己酉(1909)</option><option>庚戌(1910)</option><option>辛亥(1911)</option><option>壬子(1912)</option><option>癸丑(1913)</option><option>甲寅(1914)</option><option>乙卯(1915)</option><option>丙辰(1916)</option><option>丁巳(1917)</option><option>戊午(1918)</option><option>己未(1919)</option><option>庚申(1920)</option><option>辛酉(1921)</option><option>壬戌(1922)</option><option>癸亥(1923)</option><option>甲子(1924)</option><option>乙丑(1925)</option><option>丙寅(1926)</option><option>丁卯(1927)</option><option>戊辰(1928)</option><option>己巳(1929)</option><option>庚午(1930)</option><option>辛未(1931)</option><option>壬申(1932)</option><option>癸酉(1933)</option><option>甲戌(1934)</option><option>乙亥(1935)</option><option>丙子(1936)</option><option>丁丑(1937)</option><option>戊寅(1938)</option><option>己卯(1939)</option><option>庚辰(1940)</option><option>辛巳(1941)</option><option>壬午(1942)</option><option>癸未(1943)</option><option>甲申(1944)</option><option>乙酉(1945)</option><option>丙戌(1946)</option><option>丁亥(1947)</option><option>戊子(1948)</option><option>己丑(1949)</option><option>庚寅(1950)</option><option>辛卯(1951)</option><option>壬辰(1952)</option><option>癸巳(1953)</option><option>甲午(1954)</option><option>乙未(1955)</option><option>丙申(1956)</option><option>丁酉(1957)</option><option>戊戌(1958)</option><option>己亥(1959)</option><option>庚子(1960)</option><option>辛丑(1961)</option><option>壬寅(1962)</option><option>癸卯(1963)</option><option>甲辰(1964)</option><option>乙巳(1965)</option><option>丙午(1966)</option><option>丁未(1967)</option><option>戊申(1968)</option><option>己酉(1969)</option><option>庚戌(1970)</option><option>辛亥(1971)</option><option>壬子(1972)</option><option>癸丑(1973)</option><option>甲寅(1974)</option><option>乙卯(1975)</option><option>丙辰(1976)</option><option>丁巳(1977)</option><option>戊午(1978)</option><option>己未(1979)</option><option>庚申(1980)</option><option>辛酉(1981)</option><option>壬戌(1982)</option><option>癸亥(1983)</option><option>甲子(1984)</option><option>乙丑(1985)</option><option>丙寅(1986)</option><option>丁卯(1987)</option><option>戊辰(1988)</option><option>己巳(1989)</option><option>庚午(1990)</option><option>辛未(1991)</option><option>壬申(1992)</option><option>癸酉(1993)</option><option>甲戌(1994)</option><option>乙亥(1995)</option><option>丙子(1996)</option><option>丁丑(1997)</option><option>戊寅(1998)</option><option>己卯(1999)</option><option>庚辰(2000)</option><option>辛巳(2001)</option><option>壬午(2002)</option><option>癸未(2003)</option><option>甲申(2004)</option><option>乙酉(2005)</option><option>丙戌(2006)</option><option>丁亥(2007)</option><option>戊子(2008)</option><option>己丑(2009)</option><option>庚寅(2010)</option><option>辛卯(2011)</option><option>壬辰(2012)</option><option>癸巳(2013)</option><option>甲午(2014)</option><option>乙未(2015)</option><option>丙申(2016)</option><option>丁酉(2017)</option><option>戊戌(2018)</option><option>己亥(2019)</option><option>庚子(2020)</option><option>辛丑(2021)</option><option>壬寅(2022)</option><option>癸卯(2023)</option><option>甲辰(2024)</option><option>乙巳(2025)</option><option>丙午(2026)</option><option>丁未(2027)</option><option>戊申(2028)</option><option>己酉(2029)</option><option>庚戌(2030)</option><option>辛亥(2031)</option><option>壬子(2032)</option><option>癸丑(2033)</option><option>甲寅(2034)</option><option>乙卯(2035)</option><option>丙辰(2036)</option><option>丁巳(2037)</option><option>戊午(2038)</option><option>己未(2039)</option><option>庚申(2040)</option><option>辛酉(2041)</option><option>壬戌(2042)</option><option>癸亥(2043)</option><option>甲子(2044)</option><option>乙丑(2045)</option><option>丙寅(2046)</option><option>丁卯(2047)</option><option>戊辰(2048)</option><option>己巳(2049)</option><option>庚午(2050)</option><option>辛未(2051)</option><option>壬申(2052)</option><option>癸酉(2053)</option><option>甲戌(2054)</option><option>乙亥(2055)</option><option>丙子(2056)</option><option>丁丑(2057)</option><option>戊寅(2058)</option><option>己卯(2059)</option><option>庚辰(2060)</option><option>辛巳(2061)</option><option>壬午(2062)</option><option>癸未(2063)</option><option>甲申(2064)</option><option>乙酉(2065)</option><option>丙戌(2066)</option><option>丁亥(2067)</option><option>戊子(2068)</option><option>己丑(2069)</option><option>庚寅(2070)</option><option>辛卯(2071)</option><option>壬辰(2072)</option><option>癸巳(2073)</option><option>甲午(2074)</option><option>乙未(2075)</option><option>丙申(2076)</option><option>丁酉(2077)</option><option>戊戌(2078)</option><option>己亥(2079)</option><option>庚子(2080)</option><option>辛丑(2081)</option><option>壬寅(2082)</option><option>癸卯(2083)</option><option>甲辰(2084)</option><option>乙巳(2085)</option><option>丙午(2086)</option><option>丁未(2087)</option><option>戊申(2088)</option><option>己酉(2089)</option><option>庚戌(2090)</option><option>辛亥(2091)</option><option>壬子(2092)</option><option>癸丑(2093)</option><option>甲寅(2094)</option><option>乙卯(2095)</option><option>丙辰(2096)</option><option>丁巳(2097)</option><option>戊午(2098)</option><option>己未(2099)</option><option>庚申(2100)</option>");
-            //}
+            $("#year2, #month2, #day2, #hour2").empty();
+            addlunaryear2();
+            addlunarmonth2();
+            addlunarday2();
+            addlunarhour2();
 
             $("#b-year").on("change", Rlmonthdays);
             $("#b-month").on("change", Rlmonthdays);
         } else {
-            $("#date-container2").hide();
-            var $options = hour.find("option");
-            $options.each(function () {
-                var $option = $(this);
-                $option.show();
-            });
-            $("#hour option[index='0']").remove();
+            $("#year2, #month2, #day2, #hour2").empty();
+            addgreyear2();
+            addgremonth2();
+            addgreday2();
+            addgrehour2();
             $("#b-year").on("change", updateDaySelect);
             $("#b-month").on("change", updateDaySelect);
         }

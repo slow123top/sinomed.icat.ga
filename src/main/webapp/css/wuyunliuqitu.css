@@ -274,11 +274,17 @@
     height: 30px;
     width: 350px;
 }
-.gredate{
+.greandlunardate{
     margin-top: -30px;
     margin-left: 80px;
+    height: 30px;
+    width: 400px;
 }
 #query-mtbtn{
-    margin-left: 485px;
+    margin-left: 550px;
+    margin-top: -30px;
+}
+#query-btbtn{
+    margin-left: 550px;
     margin-top: -30px;
 }
