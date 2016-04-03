@@ -4,11 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/icat/sinomed/controller/WuyunliuqituJsonControllerServlet.java" line="54" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="65460c0a-fbe9-4789-b506-a827d0a9ede0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/css/wuyunliuqitu.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/wuyunliuqitu.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/wuyunliuqituAjax.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/wuyunliuqituAjax.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/wuyunliuqituAjax.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/wuyunliuqituAjax.jsp" />
-    </list>
+    <list default="true" id="65460c0a-fbe9-4789-b506-a827d0a9ede0" name="Default" comment="" />
     <ignored path="sinomed.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/classes/" />
@@ -176,6 +172,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
